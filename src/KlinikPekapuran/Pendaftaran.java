@@ -28,7 +28,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
         kolom = tabelPasien.getColumnModel().getColumn(0);
         kolom.setPreferredWidth(70);
         kolom = tabelPasien.getColumnModel().getColumn(1);
-        kolom.setPreferredWidth(170);
+        kolom.setPreferredWidth(150);
         kolom = tabelPasien.getColumnModel().getColumn(2);
         kolom.setPreferredWidth(100);
         kolom = tabelPasien.getColumnModel().getColumn(3);
@@ -38,13 +38,15 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
         kolom = tabelPasien.getColumnModel().getColumn(5);
         kolom.setPreferredWidth(120);
         kolom = tabelPasien.getColumnModel().getColumn(6);
-        kolom.setPreferredWidth(250);
+        kolom.setPreferredWidth(200);
+        kolom = tabelPasien.getColumnModel().getColumn(7);
+        kolom.setPreferredWidth(70);
         
         
     }
     
     public void tablePasien(){
-        Object baris[]={"ID Pasien", "Nama Pasien", "Jenis Kelamin", "Tanggal Lahir", "Tempat Lahir", "No. Telepon", "Alamat"};
+        Object baris[]={"ID Pasien", "Nama Pasien", "Jenis Kelamin", "Tanggal Lahir", "Tempat Lahir", "No. Telepon", "Alamat", "KTP"};
         tablemode = new DefaultTableModel(null, baris);
         tabelPasien.setModel(tablemode);
         String sql = " select * from pasien order by id_pasien asc";
@@ -59,8 +61,9 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
                 String tempat_lahir = hasil.getString("tempat_lahir");
                 String telp = hasil.getString("telp");
                 String alamat = hasil.getString("alamat");
+                String ktp = hasil.getString("nomor_ktp");
                 
-                String hasilAll[] = {id_pasien, nama_pasien, jenis_kelamin, tgl_lahir, tempat_lahir, telp, alamat};
+                String hasilAll[] = {id_pasien, nama_pasien, jenis_kelamin, tgl_lahir, tempat_lahir, telp, alamat, ktp};
                 tablemode.addRow(hasilAll);
                 lebarKolom();
             }
@@ -86,6 +89,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
         tempat_lahir_pasien.setText("");
         telp_pasien.setText("");
         alamat_pasien.setText("");
+        no_ktp.setText("");
     }
 
     /**
@@ -118,6 +122,8 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
         Simpan = new javax.swing.JButton();
         jenis_kelamin = new javax.swing.JComboBox<>();
         Ubah = new javax.swing.JButton();
+        no_ktp = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         pencarian = new javax.swing.JTextField();
@@ -220,6 +226,12 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
             }
         });
 
+        no_ktp.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        no_ktp.setPreferredSize(new java.awt.Dimension(6, 27));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("No. KTP");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -233,14 +245,16 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel12))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tgl_lahir_pasien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nama_pasien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(id_pasien, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tempat_lahir_pasien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jenis_kelamin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jenis_kelamin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(no_ktp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -264,6 +278,10 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(id_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(no_ktp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -308,22 +326,22 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
             }
         });
 
-        tabelPasien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelPasien.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         tabelPasien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
             }
         ));
         tabelPasien.setRowHeight(25);
@@ -351,9 +369,9 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(pencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel10))
-                        .addGap(0, 237, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3))
-                .addContainerGap())
+                .addGap(46, 46, 46))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,7 +415,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String tgl = String.valueOf(format.format(tgl_lahir_pasien.getDate())); 
         
-        String sql = "insert into pasien values (?,?,?,?,?,?,?)";
+        String sql = "insert into pasien values (?,?,?,?,?,?,?,?)";
             try{
                 PreparedStatement stat = Conn.prepareStatement(sql);
                 stat.setString(1, id_pasien.getText());
@@ -407,6 +425,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
                 stat.setString(5, tempat_lahir_pasien.getText());
                 stat.setString(6, telp_pasien.getText());
                 stat.setString(7, alamat_pasien.getText());
+                stat.setString(8, no_ktp.getText());
 
                 stat.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Data akan disimpan");
@@ -461,7 +480,8 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
                     + "tgl_lahir=?,"
                     + "tempat_lahir=?,"
                     + "telp=?,"
-                    + "alamat=? "
+                    + "alamat=?,"
+                    + "no_ktp=? "
                     + "where id_pasien='"+id_pasien.getText()+"'";
             PreparedStatement stat = Conn.prepareStatement(sql);
             stat.setString(1, id_pasien.getText());
@@ -471,6 +491,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
             stat.setString(5, tempat_lahir_pasien.getText());
             stat.setString(6, telp_pasien.getText());
             stat.setString(7, alamat_pasien.getText());
+            stat.setString(7, no_ktp.getText());
                 
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data akan diubah");
@@ -485,7 +506,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
 
     private void pencarianKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pencarianKeyPressed
         // TODO add your handling code here:
-        Object baris[]={"ID Pasien", "Nama Pasien", "Jenis Kelamin", "Tanggal Lahir", "Tempat Lahir", "No. Telepon", "Alamat"};
+        Object baris[]={"ID Pasien", "Nama Pasien", "Jenis Kelamin", "Tanggal Lahir", "Tempat Lahir", "No. Telepon", "Alamat", "No. KTP"};
         tablemode = new DefaultTableModel(null, baris);
         tabelPasien.setModel(tablemode);
 
@@ -501,8 +522,9 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
                 String tempat_lahir = hasil.getString("tempat_lahir");
                 String telp = hasil.getString("telp");
                 String alamat = hasil.getString("alamat");
+                String no_ktp = hasil.getString("nomor_ktp");
 
-                String hasilAll[] = {id_pasien, nama_pasien, jenis_kelamin, tgl_lahir, tempat_lahir, telp, alamat};
+                String hasilAll[] = {id_pasien, nama_pasien, jenis_kelamin, tgl_lahir, tempat_lahir, telp, alamat, no_ktp};
                 tablemode.addRow(hasilAll);
             }
 
@@ -519,6 +541,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
     private javax.swing.JTextField id_pasien;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -534,6 +557,7 @@ public class Pendaftaran extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JComboBox<String> jenis_kelamin;
     private javax.swing.JTextField nama_pasien;
+    private javax.swing.JTextField no_ktp;
     private javax.swing.JTextField pencarian;
     private javax.swing.JTable tabelPasien;
     private javax.swing.JTextField telp_pasien;

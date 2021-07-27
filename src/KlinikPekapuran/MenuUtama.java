@@ -90,6 +90,9 @@ public class MenuUtama extends javax.swing.JFrame {
         Laporan2 = new javax.swing.JMenu();
         DataPasien = new javax.swing.JMenuItem();
         DataKeuangan = new javax.swing.JMenuItem();
+        DataPasien1 = new javax.swing.JMenuItem();
+        DataPasien2 = new javax.swing.JMenuItem();
+        DataPasien3 = new javax.swing.JMenuItem();
         Kelura = new javax.swing.JMenu();
 
         jMenu1.setText("File");
@@ -145,7 +148,7 @@ public class MenuUtama extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,7 +286,7 @@ public class MenuUtama extends javax.swing.JFrame {
         Laporan2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         DataPasien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/report.png"))); // NOI18N
-        DataPasien.setText("Data Pasien");
+        DataPasien.setText("Data Pasien Poli Umum");
         DataPasien.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         DataPasien.setIconTextGap(1);
         DataPasien.addActionListener(new java.awt.event.ActionListener() {
@@ -294,7 +297,7 @@ public class MenuUtama extends javax.swing.JFrame {
         Laporan2.add(DataPasien);
 
         DataKeuangan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/report.png"))); // NOI18N
-        DataKeuangan.setText("Data Keuangan");
+        DataKeuangan.setText("Data Pasien Poli Gigi");
         DataKeuangan.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         DataKeuangan.setIconTextGap(1);
         DataKeuangan.addActionListener(new java.awt.event.ActionListener() {
@@ -303,6 +306,39 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         Laporan2.add(DataKeuangan);
+
+        DataPasien1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/report.png"))); // NOI18N
+        DataPasien1.setText("Data Pasien Bidan");
+        DataPasien1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        DataPasien1.setIconTextGap(1);
+        DataPasien1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataPasien1ActionPerformed(evt);
+            }
+        });
+        Laporan2.add(DataPasien1);
+
+        DataPasien2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/report.png"))); // NOI18N
+        DataPasien2.setText("Data Obat");
+        DataPasien2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        DataPasien2.setIconTextGap(1);
+        DataPasien2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataPasien2ActionPerformed(evt);
+            }
+        });
+        Laporan2.add(DataPasien2);
+
+        DataPasien3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/report.png"))); // NOI18N
+        DataPasien3.setText("Data Karyawan");
+        DataPasien3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        DataPasien3.setIconTextGap(1);
+        DataPasien3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataPasien3ActionPerformed(evt);
+            }
+        });
+        Laporan2.add(DataPasien3);
 
         jMenuBar1.add(Laporan2);
 
@@ -512,6 +548,18 @@ public class MenuUtama extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_KeluraMouseClicked
 
+    private void DataPasien1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataPasien1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DataPasien1ActionPerformed
+
+    private void DataPasien2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataPasien2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DataPasien2ActionPerformed
+
+    private void DataPasien3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataPasien3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DataPasien3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -551,6 +599,9 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenu DataInduk;
     private javax.swing.JMenuItem DataKeuangan;
     private javax.swing.JMenuItem DataPasien;
+    private javax.swing.JMenuItem DataPasien1;
+    private javax.swing.JMenuItem DataPasien2;
+    private javax.swing.JMenuItem DataPasien3;
     private javax.swing.JMenuItem InformasiUmum;
     private javax.swing.JMenu Kelura;
     private javax.swing.JMenu Laporan2;

@@ -5,19 +5,76 @@
  */
 package KlinikPekapuran;
 
+import java.sql.*;
+import java.text.*;
+import java.time.Instant;
+import java.util.Date;
+import java.util.logging.*;
+import javax.swing.table.*;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Nur
  */
 public class PoliGigi extends javax.swing.JInternalFrame {
-
+    public final Connection Conn = new Koneksi().Connect();
+    private DefaultTableModel tablemode;
+    
+    public void ukuranKolom(){
+        TableColumn kolom;
+        tabelPasienGigi.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+    }
+    
+    public void tabelPasienUmum(){
+        Object baris[]={"Tgl. Berobat", "ID Pasien", "Nama Pasien", "Jenis Kelamin", "Keluhan", "Dokter", "Resep", "Diagnosa"};
+        tablemode = new DefaultTableModel(null, baris);
+        tabelPasienGigi.setModel(tablemode);
+        String sql = " select * from poligigi order by tgl_berobat desc";
+        try{
+            java.sql.Statement put = Conn.createStatement();
+            ResultSet hasil = put.executeQuery(sql);
+            while (hasil.next()){
+                String tgl_berobat = hasil.getString("tgl_berobat");
+                String id_pasien = hasil.getString("id_pasien");
+                String nama_pasien = hasil.getString("nama_pasien");
+                String jenis_kelamin = hasil.getString("jenis_kelamin");
+                String keluhan = hasil.getString("keluhan");
+                String dokter = hasil.getString("dokter");
+                String resep = hasil.getString("resep");
+                String diagnosa = hasil.getString("diagnosa");
+                
+                String hasilAll[] = {tgl_berobat, id_pasien, nama_pasien, jenis_kelamin, keluhan, dokter, resep, diagnosa};
+                tablemode.addRow(hasilAll);
+                ukuranKolom();
+            }
+            
+        } catch (Exception e){} 
+    }
+    
+    
+    
+    
     /**
      * Creates new form Pendaftaran
      */
     public PoliGigi() {
         initComponents();
+        tabelPasienUmum();
+        ukuranKolom();
+        
     }
-
+    
+    protected void blank(){
+        id_pasien.setText("");
+        nama_pasien.setText("");
+        jenis_kelamin.setSelectedIndex(0);
+        tgl_berobat.setDate(Date.from(Instant.now()));
+        keluhan.setText("");
+        dokter_PoliGigi.setSelectedIndex(0);
+        resep_obat.setText("");
+        diagnosa.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,9 +98,9 @@ public class PoliGigi extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         keluhan = new javax.swing.JTextArea();
-        Hapus1 = new javax.swing.JButton();
-        Simpan1 = new javax.swing.JButton();
-        Ubah = new javax.swing.JButton();
+        HapusPoliGigi = new javax.swing.JButton();
+        SimpanPoliGigi = new javax.swing.JButton();
+        UbahPoliGigi = new javax.swing.JButton();
         CariPasien = new javax.swing.JButton();
         dokter_PoliGigi = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -55,10 +112,10 @@ public class PoliGigi extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        id_pasien1 = new javax.swing.JTextField();
+        pencarian = new javax.swing.JTextField();
         Cari = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tabelPasien = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tabelPasienGigi = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1541, 800));
 
@@ -90,23 +147,18 @@ public class PoliGigi extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("No. Pasien");
 
-        id_pasien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        id_pasien.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nama Pasien");
 
-        nama_pasien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nama_pasien.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Jenis Kelamin");
 
-        jenis_kelamin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jenis_kelamin.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jenis_kelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Laki-laki", "Perempuan" }));
-        jenis_kelamin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jenis_kelaminActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Tanggal Berobat");
@@ -115,17 +167,33 @@ public class PoliGigi extends javax.swing.JInternalFrame {
         jLabel9.setText("Keluhan");
 
         keluhan.setColumns(20);
+        keluhan.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         keluhan.setRows(5);
         jScrollPane1.setViewportView(keluhan);
 
-        Hapus1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Hapus1.setText("Hapus");
+        HapusPoliGigi.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        HapusPoliGigi.setText("Hapus");
+        HapusPoliGigi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HapusPoliGigiActionPerformed(evt);
+            }
+        });
 
-        Simpan1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Simpan1.setText("Simpan");
+        SimpanPoliGigi.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        SimpanPoliGigi.setText("Simpan");
+        SimpanPoliGigi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SimpanPoliGigiActionPerformed(evt);
+            }
+        });
 
-        Ubah.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Ubah.setText("Ubah");
+        UbahPoliGigi.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UbahPoliGigi.setText("Ubah");
+        UbahPoliGigi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UbahPoliGigiActionPerformed(evt);
+            }
+        });
 
         CariPasien.setBackground(new java.awt.Color(0, 102, 102));
         CariPasien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -136,13 +204,8 @@ public class PoliGigi extends javax.swing.JInternalFrame {
             }
         });
 
-        dokter_PoliGigi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        dokter_PoliGigi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "Ibnu Batutah", "Nizam", "Puji Astuti", "Yahya Syafrudin" }));
-        dokter_PoliGigi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dokter_PoliGigiActionPerformed(evt);
-            }
-        });
+        dokter_PoliGigi.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        dokter_PoliGigi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "Yahya Syafrudin", "Nizam", "Puji Astuti", "Ibnu Batutah" }));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Dokter");
@@ -151,10 +214,12 @@ public class PoliGigi extends javax.swing.JInternalFrame {
         jLabel11.setText("Resep Obat");
 
         resep_obat.setColumns(20);
+        resep_obat.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         resep_obat.setRows(5);
         jScrollPane2.setViewportView(resep_obat);
 
         diagnosa.setColumns(20);
+        diagnosa.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         diagnosa.setRows(5);
         jScrollPane4.setViewportView(diagnosa);
 
@@ -200,11 +265,11 @@ public class PoliGigi extends javax.swing.JInternalFrame {
                         .addGap(62, 62, 62)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(Ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(UbahPoliGigi, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                                .addComponent(Hapus1)
+                                .addComponent(HapusPoliGigi)
                                 .addGap(60, 60, 60)
-                                .addComponent(Simpan1))
+                                .addComponent(SimpanPoliGigi))
                             .addComponent(jScrollPane4))))
                 .addContainerGap())
         );
@@ -214,18 +279,18 @@ public class PoliGigi extends javax.swing.JInternalFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(id_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(id_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CariPasien)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(nama_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nama_pasien, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jenis_kelamin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jenis_kelamin, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(tgl_berobat, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -236,8 +301,8 @@ public class PoliGigi extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(dokter_PoliGigi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(dokter_PoliGigi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -247,42 +312,46 @@ public class PoliGigi extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Simpan1)
-                    .addComponent(Hapus1)
-                    .addComponent(Ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(SimpanPoliGigi)
+                    .addComponent(HapusPoliGigi)
+                    .addComponent(UbahPoliGigi, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(141, 141, 141))
         );
 
         jPanel3.setBackground(new java.awt.Color(153, 255, 153));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel10.setText("Database Pasien");
+        jLabel10.setText("Database Pasien Poli Gigi");
 
-        id_pasien1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        pencarian.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
 
+        Cari.setBackground(new java.awt.Color(255, 255, 255));
         Cari.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Cari.setForeground(new java.awt.Color(255, 255, 255));
         Cari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Search.png"))); // NOI18N
+        Cari.setBorderPainted(false);
+        Cari.setContentAreaFilled(false);
+        Cari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CariActionPerformed(evt);
+            }
+        });
 
-        tabelPasien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelPasien.setModel(new javax.swing.table.DefaultTableModel(
+        tabelPasienGigi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
             }
         ));
-        tabelPasien.setRowHeight(25);
-        jScrollPane3.setViewportView(tabelPasien);
+        tabelPasienGigi.setRowHeight(30);
+        tabelPasienGigi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelPasienGigiMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tabelPasienGigi);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -293,14 +362,11 @@ public class PoliGigi extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(id_pasien1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Cari, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(471, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3)
-                .addContainerGap())
+                        .addComponent(pencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Cari, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(115, 115, 115))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,12 +374,12 @@ public class PoliGigi extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(id_pasien1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Cari, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Cari, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pencarian))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -324,7 +390,8 @@ public class PoliGigi extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,29 +406,160 @@ public class PoliGigi extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jenis_kelaminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jenis_kelaminActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jenis_kelaminActionPerformed
-
-    private void dokter_PoliGigiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dokter_PoliGigiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dokter_PoliGigiActionPerformed
-
     private void CariPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariPasienActionPerformed
         // TODO add your handling code here:
+        try{
+            String sql= "SELECT * FROM pasien WHERE id_pasien LIKE '%" + id_pasien.getText() + "%'" ;
+                        java.sql.Statement put = Conn.createStatement();
+                        ResultSet rs = put.executeQuery(sql);
+            
+                        if(rs.next()){
+                         
+                        String add1 = rs.getString("nama_pasien");
+                        nama_pasien.setText(add1);
+                        String add2 = rs.getString("jenis_kelamin");
+                        jenis_kelamin.setSelectedItem(add2);
+                        }
+        }catch(Exception e){}
     }//GEN-LAST:event_CariPasienActionPerformed
+
+    private void SimpanPoliGigiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanPoliGigiActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String tgl = String.valueOf(format.format(tgl_berobat.getDate())); 
+        
+        String sql = "insert into poligigi values (?,?,?,?,?,?,?,?)";
+            try{
+                PreparedStatement stat = Conn.prepareStatement(sql);
+                stat.setString(1, id_pasien.getText());
+                stat.setString(2, nama_pasien.getText());
+                stat.setString(3, jenis_kelamin.getSelectedItem().toString());
+                stat.setString(4, tgl);
+                stat.setString(5, keluhan.getText());
+                stat.setString(6, dokter_PoliGigi.getSelectedItem().toString());
+                stat.setString(7, resep_obat.getText());
+                stat.setString(8, diagnosa.getText());
+
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Lanjut Untuk Simpan");
+                blank();
+                id_pasien.requestFocus();
+                tabelPasienUmum();
+            }
+            catch (SQLException e){
+                JOptionPane.showMessageDialog(null, "Data gagal disimpan"+e);
+                tabelPasienUmum();
+                
+            }
+    }//GEN-LAST:event_SimpanPoliGigiActionPerformed
+
+    private void HapusPoliGigiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HapusPoliGigiActionPerformed
+        // TODO add your handling code here:
+        tabelPasienUmum();
+        blank();
+    }//GEN-LAST:event_HapusPoliGigiActionPerformed
+
+    private void UbahPoliGigiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UbahPoliGigiActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat tglKlik = new SimpleDateFormat("yyyy-MM-dd");
+        String tgl = String.valueOf(tglKlik.format(tgl_berobat.getDate()));
+        try{
+            String sql = "update poliumum set "
+                    + "id_pasien=?, "
+                    + "nama_pasien=?,"
+                    + "jenis_kelamin=?,"
+                    + "tgl_berobat=?,"
+                    + "keluhan=?,"
+                    + "dokter=?,"
+                    + "resep=?,"
+                    + "diagnosa=? "
+                    + "where id_pasien='"+id_pasien.getText()+"'";
+            PreparedStatement stat = Conn.prepareStatement(sql);
+            stat.setString(1, id_pasien.getText());
+            stat.setString(2, nama_pasien.getText());
+            stat.setString(3, jenis_kelamin.getSelectedItem().toString());
+            stat.setString(4, tgl);
+            stat.setString(5, keluhan.getText());
+            stat.setString(6, dokter_PoliGigi.getSelectedItem().toString());
+            stat.setString(7, resep_obat.getText());
+            stat.setString(7, diagnosa.getText());
+                
+            stat.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Lanjut Untuk Ubah Data");
+            blank();
+            id_pasien.requestFocus();
+        }      
+        catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Data gagal diubah"+e);
+        }
+        tabelPasienUmum();
+    }//GEN-LAST:event_UbahPoliGigiActionPerformed
+
+    private void CariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql= "SELECT * FROM poliumum WHERE id_pasien like '%" + pencarian.getText() + "%'" +"or nama_pasien like '%" + pencarian.getText()+"%'";
+                        java.sql.Statement put = Conn.createStatement();
+                        ResultSet rs = put.executeQuery(sql);
+            
+                        if(rs.next()){
+                         
+                        String add1 = rs.getString("id_pasien");
+                        id_pasien.setText(add1);
+                        String add2 = rs.getString("nama_pasien");
+                        nama_pasien.setText(add2);
+                        String add3 = rs.getString("jenis_kelamin");
+                        jenis_kelamin.setSelectedItem(add3);
+                        String add4 = rs.getString("tgl_berobat");
+                        //tgl_berobat.setDate();Text(add4);
+                        //String add4 = rs.getString("keluhan");
+                        keluhan.setText(add4);
+                        String add5 = rs.getString("dokter");
+                        dokter_PoliGigi.setSelectedItem(add5);
+                        String add6 = rs.getString("resep");
+                        resep_obat.setText(add6);
+                        String add7 = rs.getString("diagnosa");
+                        diagnosa.setText(add7);
+                        Date t = rs.getDate("tgl_berobat");
+                        tgl_berobat.setDate(t);
+                        }
+        }catch(Exception e){}
+    
+    }//GEN-LAST:event_CariActionPerformed
+
+    private void tabelPasienGigiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelPasienGigiMouseClicked
+        // TODO add your handling code here:
+        SimpleDateFormat tglview = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateView = null;
+
+        int baris = tabelPasienGigi.getSelectedRow();
+
+        try {
+            
+            id_pasien.setText(tabelPasienGigi.getModel().getValueAt(baris, 1).toString());
+            nama_pasien.setText(tabelPasienGigi.getModel().getValueAt(baris, 2).toString()); 
+            jenis_kelamin.setSelectedItem(tabelPasienGigi.getModel().getValueAt(baris, 3).toString());
+            tgl_berobat.setDateFormatString(tabelPasienGigi.getModel().getValueAt(baris, 0).toString());
+            keluhan.setText(tabelPasienGigi.getModel().getValueAt(baris, 4).toString());
+            dokter_PoliGigi.setSelectedItem(tabelPasienGigi.getModel().getValueAt(baris, 5).toString());
+            resep_obat.setText(tabelPasienGigi.getModel().getValueAt(baris, 6).toString());
+            diagnosa.setText(tabelPasienGigi.getModel().getValueAt(baris, 7).toString());
+                    
+        }catch (Exception e) {}
+        
+        
+    }//GEN-LAST:event_tabelPasienGigiMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cari;
     private javax.swing.JButton CariPasien;
-    private javax.swing.JButton Hapus1;
-    private javax.swing.JButton Simpan1;
-    private javax.swing.JButton Ubah;
+    private javax.swing.JButton HapusPoliGigi;
+    private javax.swing.JButton SimpanPoliGigi;
+    private javax.swing.JButton UbahPoliGigi;
     private javax.swing.JTextArea diagnosa;
     private javax.swing.JComboBox<String> dokter_PoliGigi;
     private javax.swing.JTextField id_pasien;
-    private javax.swing.JTextField id_pasien1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -377,13 +575,14 @@ public class PoliGigi extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JComboBox<String> jenis_kelamin;
     private javax.swing.JTextArea keluhan;
     private javax.swing.JTextField nama_pasien;
+    private javax.swing.JTextField pencarian;
     private javax.swing.JTextArea resep_obat;
-    private javax.swing.JTable tabelPasien;
+    private javax.swing.JTable tabelPasienGigi;
     private com.toedter.calendar.JDateChooser tgl_berobat;
     // End of variables declaration//GEN-END:variables
 }
