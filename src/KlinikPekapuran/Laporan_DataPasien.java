@@ -12,13 +12,17 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 
@@ -59,8 +63,11 @@ public class Laporan_DataPasien extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        layanan = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setForeground(java.awt.Color.darkGray);
@@ -73,32 +80,53 @@ public class Laporan_DataPasien extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 0));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Laporan Data Pasien");
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Laporan Data Pasien");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addContainerGap(1241, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel4)
-                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(12, 12, 12))
         );
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         jButton1.setText("PRINT");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel4.setText("Data Pasien Keseluruhan ");
+
+        jLabel6.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel6.setText("Data Pasien Berdasarkan Layanan");
+
+        layanan.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
+        layanan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Pilih-", "Poli Umum", "Poli Gigi", "Bidan" }));
+        layanan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                layananItemStateChanged(evt);
             }
         });
 
@@ -108,16 +136,31 @@ public class Laporan_DataPasien extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(26, 26, 26)
+                        .addComponent(layanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(1082, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(72, 72, 72)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jButton1))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(layanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
 
         pack();
@@ -125,19 +168,93 @@ public class Laporan_DataPasien extends javax.swing.JInternalFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-            JasperPrint jp = JasperFillManager.fillReport(getClass().getResourceAsStream("cobaReportLagi.jrxml"), null, Conn);
+         try {
+            
+            JasperPrint jp = JasperFillManager.fillReport(getClass().getResourceAsStream("ReportPasien.jasper"), null, Conn);
             JasperViewer.viewReport(jp, false);
         } catch(Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
+        
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JasperReport report;
+        String path = ".\\src\\KlinikPekapuran\\ReportPasien3.jasper";
+        try{
+            report = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint jprint = JasperFillManager.fillReport(path, null, Conn);
+            
+            JasperViewer jview = new JasperViewer(jprint, false);
+            jview.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            jview.setVisible(true);
+        }catch (JRException ex){
+            Logger.getLogger(Laporan_DataPasien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void layananItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_layananItemStateChanged
+        // TODO add your handling code here:
+        
+        int pilih = layanan.getSelectedIndex();
+        
+        switch (pilih){
+            case 0:
+                JasperReport reportUmum;
+                String path = ".\\src\\KlinikPekapuran\\ReportPoliUmum.jasper";
+                try{
+                    reportUmum = (JasperReport) JRLoader.loadObjectFromFile(path);
+                    JasperPrint jprint = JasperFillManager.fillReport(path, null, Conn);
+            
+                    JasperViewer jview = new JasperViewer(jprint, false);
+                    jview.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    jview.setVisible(true);
+                }catch (JRException ex){
+                    Logger.getLogger(Laporan_DataPasien.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+                
+            case 1:
+                JasperReport reportGigi;
+                String path2 = ".\\src\\KlinikPekapuran\\ReportPoliGigi2.jasper";
+                try{
+                    reportGigi = (JasperReport) JRLoader.loadObjectFromFile(path2);
+                    JasperPrint jprint = JasperFillManager.fillReport(path2, null, Conn);
+                    
+                    JasperViewer jview = new JasperViewer(jprint, false);
+                    jview.setDefaultCloseOperation(DISPOSE_ON_CLOSE);;
+                    jview.setVisible(true);
+                }catch (JRException ex){
+                    Logger.getLogger(Laporan_DataPasien.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+                
+            case 2:
+                JasperReport reportBidan;
+                String path3 = ".\\src\\KlinikPekapuran\\ReportBidan.jasper";
+                try{
+                    reportBidan = (JasperReport) JRLoader.loadObjectFromFile(path3);
+                    JasperPrint jprint = JasperFillManager.fillReport(path3, null, Conn);
+            
+                    JasperViewer jview = new JasperViewer(jprint, false);
+                    jview.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    jview.setVisible(true);
+                }catch (JRException ex){
+                    Logger.getLogger(Laporan_DataPasien.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;        
+        }
+        
+    }//GEN-LAST:event_layananItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> layanan;
     // End of variables declaration//GEN-END:variables
 }

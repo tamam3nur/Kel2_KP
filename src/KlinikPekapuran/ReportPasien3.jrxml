@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7f25282-e85d-4750-9b41-00c7f71676e7">
+	<property name="ireport.zoom" value="1.0000000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="92"/>
+	<queryString language="SQL">
+		<![CDATA[select * from pasien]]>
+	</queryString>
+	<field name="id_pasien" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_pasien" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_kelamin" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_lahir" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tempat_lahir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alamat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomor_ktp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="235" y="79" width="190" height="27" uuid="ea0a350a-af0f-4f5b-8bcd-5298026c8e1f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="16" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[-Kelompok 2-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="34" width="428" height="45" uuid="87ab6a5b-5306-4943-906e-d6f85c258abb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Eras Demi ITC" size="36"/>
+				</textElement>
+				<text><![CDATA[KLINIK PEKAPURAN]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="8" width="109" height="98" uuid="a32b6acd-a70f-42f7-9516-eda33e983efd"/>
+				<imageExpression><![CDATA["C:\\JavaTamam\\Kel2_KP\\src\\image\\KlinikGede.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="5" y="119" width="545" height="1" uuid="89946477-54d2-41aa-8467-e67d93091069"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="181" y="14" width="190" height="27" uuid="8a129471-0156-4d56-ac8d-d15474434ec0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="18" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Laporan Data Pasien Keseluruhan]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-3" y="-6" width="553" height="25" uuid="91f57ce3-0b3d-4408-b8b7-eaf80f9e17e2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="55" height="20" uuid="ed840280-7d09-439f-9972-6815196d5cf5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID PASIEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="0" width="100" height="20" uuid="d287bbc5-bcdf-4bba-b973-a75a864f66bb"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="0" width="64" height="20" uuid="794f7995-3623-47b9-a4e1-4eaddd1054dc"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[JENIS KELAMIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="0" width="64" height="20" uuid="37ccdf7f-c519-4595-8751-05ed2fde05e5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TGL. LAHIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="0" width="82" height="20" uuid="7d96c479-886b-46d3-9098-fd739bdcf7ca"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TEMPAT LAHIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="0" width="114" height="20" uuid="7e53c61c-8414-46b9-9a1c-82ae84fa35fc"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ALAMAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="479" y="0" width="76" height="20" uuid="7e1c2f79-f84d-418f-82ac-408e993166a6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TELEPON]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="6" width="38" height="20" uuid="2f6af962-41f1-4f57-8ca6-4f767e538547"/>
+				<textFieldExpression><![CDATA[$F{id_pasien}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="6" width="100" height="20" uuid="5c49b963-7117-4e56-af37-38a663b95b4f"/>
+				<textFieldExpression><![CDATA[$F{nama_pasien}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="6" width="54" height="20" uuid="1006d929-e61d-489c-b8bb-d93209fc37cf"/>
+				<textFieldExpression><![CDATA[$F{jenis_kelamin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement mode="Opaque" x="223" y="6" width="64" height="20" uuid="52701cdf-a9e3-4679-a045-7c30816b4200"/>
+				<textFieldExpression><![CDATA[$F{tgl_lahir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="293" y="6" width="64" height="20" uuid="25c3b8ef-5e7d-4483-8bc7-a97f66734b43"/>
+				<textFieldExpression><![CDATA[$F{tempat_lahir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="6" width="100" height="20" uuid="3f73cbc2-e74d-48cb-950c-c1374bf66bde"/>
+				<textFieldExpression><![CDATA[$F{alamat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="479" y="6" width="76" height="20" uuid="c198158f-fabd-4763-8619-56a2081b401a"/>
+				<textFieldExpression><![CDATA[$F{telp}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="26" width="550" height="1" uuid="eb169e22-246e-48c4-8043-72941cfe39bb"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="185" splitType="Stretch">
+			<staticText>
+				<reportElement x="433" y="11" width="38" height="17" uuid="67bfaf24-0668-49a8-bfb4-3f7070667402"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Depok, ]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="471" y="11" width="64" height="17" uuid="45739962-cb3e-4da1-92f9-209b9f6113c5"/>
+				<textElement>
+					<font fontName="Calibri Light"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="433" y="38" width="60" height="17" uuid="a57f87d5-035a-4fdd-a1f0-d98d05d3a995"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Kepala Klinik]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="92" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

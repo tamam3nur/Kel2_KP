@@ -21,7 +21,7 @@ public class MenuUtama extends javax.swing.JFrame {
     
     PoliUmum PoliUmum;
     PoliGigi PoliGigi;
-    Bidan Bidan;
+    PoliBidan Bidan;
     
     Biaya Biaya;
     
@@ -38,7 +38,7 @@ public class MenuUtama extends javax.swing.JFrame {
         
         PoliUmum = new PoliUmum();
         PoliGigi= new PoliGigi();
-        Bidan = new Bidan();
+        Bidan = new PoliBidan();
         
         Biaya = new Biaya();
         

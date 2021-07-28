@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a914432-6505-41f9-a04b-16227f411e2b">
+	<property name="ireport.zoom" value="0.7513148009015799"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select * from poligigi]]>
+	</queryString>
+	<field name="id_pasien" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_pasien" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_kelamin" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_berobat" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="keluhan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dokter" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="resep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diagnosa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="109" y="12" width="428" height="45" uuid="dd321fa5-f481-4989-a8fe-aab55c553323"/>
+				<textElement textAlignment="Center">
+					<font fontName="Eras Demi ITC" size="36"/>
+				</textElement>
+				<text><![CDATA[KLINIK PEKAPURAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="55" width="190" height="27" uuid="2c7e1751-3c35-4018-9c6c-fe7646380457"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="16" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[-Kelompok 2-]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="-11" width="109" height="98" uuid="1e2c3537-296b-47d3-8e54-d0052bd39077"/>
+				<imageExpression><![CDATA["C:\\JavaTamam\\Kel2_KP\\src\\image\\KlinikGede.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="96" width="555" height="1" uuid="eaadc7cd-4ac4-45c0-90f6-be118937157b"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="115" y="4" width="367" height="29" uuid="628e7b02-5a54-414a-9c94-f9abdddd6079"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="18" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Data Pasien Di Pelayanan Poli Gigi]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="17" width="555" height="20" uuid="37484e4f-f538-46b5-9a8f-060434f06d16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="21" width="83" height="20" uuid="f058eed4-8792-4468-89b4-70f4349e5843"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TGL. BEROBAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="21" width="120" height="20" uuid="b8536e20-d46e-491f-9624-b5509eec5dd8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NAMA	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="21" width="54" height="20" uuid="dcde84b6-49ae-4f28-8a94-e0ebf649e8ac"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID PASIEN	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="21" width="100" height="20" uuid="6c88d764-7dd3-4e82-9fed-8b1e9befbb23"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[JENIS KELAMIN	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="21" width="84" height="20" uuid="9ddbc914-ef01-49dc-8287-475148103212"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DOKTER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="21" width="116" height="20" uuid="c906ff87-83b4-4186-b020-00ee4dd90827"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DIAGNOSA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="4" y="3" width="77" height="20" uuid="14a3ef1d-e7ca-40d4-8d2e-6f0157f7a3a1"/>
+				<textFieldExpression><![CDATA[$F{tgl_berobat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="3" width="120" height="20" uuid="14d976d3-4053-4273-ba16-bf70cc5d5cf8"/>
+				<textFieldExpression><![CDATA[$F{nama_pasien}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="3" width="54" height="20" uuid="e3bd1fd9-7f39-40b5-9c10-3a410fc85152"/>
+				<textFieldExpression><![CDATA[$F{id_pasien}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="3" width="88" height="20" uuid="a8d4a662-d121-4613-add0-f943eb1c3858"/>
+				<textFieldExpression><![CDATA[$F{jenis_kelamin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="3" width="68" height="20" uuid="644dc8b2-b462-4ab6-a095-b75177b31316"/>
+				<textFieldExpression><![CDATA[$F{dokter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="452" y="3" width="103" height="20" uuid="daf22407-d94e-4e64-86ce-7f58787614c2"/>
+				<textFieldExpression><![CDATA[$F{diagnosa}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="21" width="552" height="1" uuid="f5ba11e2-94ef-4344-b5be-249e49e24ff7"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="214" splitType="Stretch">
+			<staticText>
+				<reportElement x="439" y="8" width="38" height="17" uuid="51a068dc-750b-41e1-84fd-0224029d311f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Depok, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="35" width="85" height="17" uuid="fe18ce38-b21b-4f0d-af5b-93608aa2ab15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri Light" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Kepala Poli Gigi]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="477" y="8" width="64" height="17" uuid="47c0dd6a-d57a-40f6-9f6c-925e8b30ba25"/>
+				<textElement>
+					<font fontName="Calibri Light"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="257" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

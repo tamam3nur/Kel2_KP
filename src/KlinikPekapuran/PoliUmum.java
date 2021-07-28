@@ -482,7 +482,7 @@ public class PoliUmum extends javax.swing.JInternalFrame {
             stat.setString(5, keluhan.getText());
             stat.setString(6, dokter_PoliUmum.getSelectedItem().toString());
             stat.setString(7, resep_obat.getText());
-            stat.setString(7, diagnosa.getText());
+            stat.setString(8, diagnosa.getText());
                 
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Lanjut Untuk Ubah Data");
@@ -530,16 +530,21 @@ public class PoliUmum extends javax.swing.JInternalFrame {
     private void tabelPasienUmumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelPasienUmumMouseClicked
         // TODO add your handling code here:
         SimpleDateFormat tglview = new SimpleDateFormat("yyyy-MM-dd");
+        if (evt.getClickCount()==1) { 
         Date dateView = null;
 
         int baris = tabelPasienUmum.getSelectedRow();
-
+        try{
+            dateView = tglview.parse((String) tabelPasienUmum.getValueAt(baris, 0));
+            } catch (ParseException ex) {
+                Logger.getLogger(PoliUmum.class.getName()).log(Level.SEVERE,  null, ex);
+            }
         try {
             
             id_pasien.setText(tabelPasienUmum.getModel().getValueAt(baris, 1).toString());
             nama_pasien.setText(tabelPasienUmum.getModel().getValueAt(baris, 2).toString()); 
             jenis_kelamin.setSelectedItem(tabelPasienUmum.getModel().getValueAt(baris, 3).toString());
-            tgl_berobat.setDateFormatString(tabelPasienUmum.getModel().getValueAt(baris, 0).toString());
+            tgl_berobat.setDate(dateView);
             keluhan.setText(tabelPasienUmum.getModel().getValueAt(baris, 4).toString());
             dokter_PoliUmum.setSelectedItem(tabelPasienUmum.getModel().getValueAt(baris, 5).toString());
             resep_obat.setText(tabelPasienUmum.getModel().getValueAt(baris, 6).toString());
@@ -547,7 +552,7 @@ public class PoliUmum extends javax.swing.JInternalFrame {
                     
         }catch (Exception e) {}
         
-        
+        }
     }//GEN-LAST:event_tabelPasienUmumMouseClicked
 
 
